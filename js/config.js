@@ -48,9 +48,13 @@ const audioEngine = {
   useFallbackAudio: false,
 };
 
-const START_BUTTON_TEXT = "▶ Начать";
+const START_BUTTON_ICON = "▶";
 
-const START_LOADING_TEXT = "Загрузка…";
+const START_BUTTON_LABEL = "Начать";
+
+const START_LOADING_ICON = "⏳";
+
+const START_LOADING_LABEL = "Загрузка";
 
 const SILENCE_SECONDS = 0.03;
 

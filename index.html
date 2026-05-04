@@ -11,13 +11,13 @@
   <main class="app">
     <section class="screen" id="screen">
       <div class="topbar">
-        <button class="round-btn" id="speakBtn" aria-label="Повторить задание">🔊</button>
+        <button class="round-btn" id="speakBtn" type="button" aria-label="Слушай / повторить задание"><span aria-hidden="true">🔊</span><span class="sr-only">Слушай / повторить задание</span></button>
         <div class="dots" id="dots" aria-hidden="true"></div>
         <div class="score" aria-label="Звёзды"><span>⭐</span><span id="score">0</span></div>
       </div>
 
       <div class="prompt" id="prompt">
-        <div class="prompt-title">Слушай</div>
+        <div class="prompt-title" aria-label="Слушай"><span aria-hidden="true">🔊</span><span class="sr-only">Слушай</span></div>
       </div>
 
       <div class="playfield" id="playfield">
@@ -28,7 +28,7 @@
         <div class="options" id="options"></div>
 
         <div class="hint" id="hint">
-          <button class="hint-toggle" id="hintToggle" type="button" aria-label="Подсказка" aria-expanded="false">?</button>
+          <button class="hint-toggle" id="hintToggle" type="button" aria-label="Подсказка" aria-expanded="false"><span aria-hidden="true">💡</span><span class="sr-only">Подсказка</span></button>
           <div class="hint-answer" id="hintAnswer" hidden></div>
         </div>
 
@@ -46,7 +46,7 @@
         <div>
           <h1 class="start-title">Учим<br>слоги</h1>
           <div class="cat">🐱</div>
-          <button class="primary" id="startBtn">▶ Начать</button>
+          <button class="primary icon-only start-action" id="startBtn" type="button" aria-label="Начать"><span aria-hidden="true">▶</span><span class="sr-only">Начать</span></button>
         </div>
       </div>
 
@@ -56,8 +56,8 @@
           <div class="cat">🐱</div>
           <div class="pause-score"><span>⭐</span><span id="pauseScore">0</span></div>
           <div class="secondary-row">
-            <button class="secondary" id="againBtn">↻ Ещё раз</button>
-            <button class="primary" id="continueBtn">Дальше</button>
+            <button class="secondary icon-only" id="againBtn" type="button" aria-label="Ещё раз"><span aria-hidden="true">↻</span><span class="sr-only">Ещё раз</span></button>
+            <button class="primary icon-only" id="continueBtn" type="button" aria-label="Дальше"><span aria-hidden="true">➜</span><span class="sr-only">Дальше</span></button>
           </div>
         </div>
       </div>

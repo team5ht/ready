@@ -1,3 +1,10 @@
+// Кнопки остаются понятными для screen reader и взрослого просмотра DOM,
+// но ребёнок видит только крупный символ.
+function setIconButton(button, icon, label) {
+  button.setAttribute("aria-label", label);
+  button.innerHTML = `<span aria-hidden="true">${icon}</span><span class="sr-only">${label}</span>`;
+}
+
 // Подключение обработчиков событий и первичная инициализация.
 els.sourceLetter.addEventListener("pointerdown", onPointerDown);
 els.sourceLetter.addEventListener("pointermove", onPointerMove);
@@ -25,11 +32,11 @@ els.startBtn.addEventListener("click", async () => {
   if (els.startBtn.disabled) return;
 
   els.startBtn.disabled = true;
-  els.startBtn.textContent = START_LOADING_TEXT;
+  setIconButton(els.startBtn, START_LOADING_ICON, START_LOADING_LABEL);
 
   await waitWithTimeout(prepareAudioEngine(), AUDIO_LOAD_TIMEOUT_MS + 2000, false);
 
-  els.startBtn.textContent = START_BUTTON_TEXT;
+  setIconButton(els.startBtn, START_BUTTON_ICON, START_BUTTON_LABEL);
   els.startBtn.disabled = false;
   els.startScreen.hidden = true;
   newSession(true);
