@@ -223,6 +223,19 @@
       box-shadow: 0 16px 30px rgba(255, 200, 61, .24);
     }
 
+    .option.wrong-bounce {
+      border-color: rgba(242, 74, 91, .85);
+      background: #fff1f3;
+      animation: wrongBounce .42s ease both;
+    }
+
+    .option.correct-flash {
+      border-color: rgba(255, 200, 61, .95);
+      background: #fff7d6;
+      box-shadow: 0 16px 30px rgba(255, 200, 61, .24);
+      animation: correctFlash .9s ease both;
+    }
+
     .hint {
       position: absolute;
       left: 26px;
@@ -453,6 +466,20 @@
       25% { transform: translateX(-5px); }
       50% { transform: translateX(5px); }
       75% { transform: translateX(-3px); }
+    }
+
+    @keyframes wrongBounce {
+      0%, 100% { transform: translateX(0) scale(1); }
+      25% { transform: translateX(10px) scale(1.03); }
+      50% { transform: translateX(-8px) scale(1.03); }
+      75% { transform: translateX(4px) scale(1.01); }
+    }
+
+    @keyframes correctFlash {
+      0% { transform: scale(1); }
+      28% { transform: scale(1.10); }
+      64% { transform: scale(1.06); }
+      100% { transform: scale(1); }
     }
 
     @media (max-height: 680px) {

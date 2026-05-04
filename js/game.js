@@ -53,19 +53,36 @@ function renderDots() {
 }
 
 
-function resetHint(target) {
+function resetHint() {
   if (state.hintTimer) clearTimeout(state.hintTimer);
   state.hintTimer = null;
   els.hintAnswer.hidden = true;
   els.hintAnswer.classList.remove("flash");
-  els.hintAnswer.textContent = target;
+  els.hintAnswer.textContent = "";
   els.hintToggle.classList.remove("hint-active");
   els.hintToggle.setAttribute("aria-expanded", "false");
   clearHintHighlight();
 }
 
+function getOptionByVowel(vowel) {
+  return els.options.querySelector(`.option[data-vowel="${vowel}"]`);
+}
+
 function clearHintHighlight() {
   els.options.querySelectorAll(".hint-hot").forEach(o => o.classList.remove("hint-hot"));
+}
+
+function clearAnswerFeedback() {
+  els.options.querySelectorAll(".wrong-bounce, .correct-flash").forEach(o => {
+    o.classList.remove("wrong-bounce", "correct-flash");
+  });
+}
+
+function restartOptionAnimation(option, className) {
+  if (!option) return;
+  option.classList.remove(className);
+  void option.offsetWidth;
+  option.classList.add(className);
 }
 
 function hideHint() {
@@ -73,6 +90,7 @@ function hideHint() {
   state.hintTimer = null;
   els.hintAnswer.hidden = true;
   els.hintAnswer.classList.remove("flash");
+  els.hintAnswer.textContent = "";
   els.hintToggle.classList.remove("hint-active");
   els.hintToggle.setAttribute("aria-expanded", "false");
   clearHintHighlight();
@@ -84,15 +102,13 @@ function showHint() {
   if (state.hintTimer) clearTimeout(state.hintTimer);
   clearHintHighlight();
 
-  els.hintAnswer.textContent = state.task.target;
-  els.hintAnswer.hidden = false;
+  els.hintAnswer.hidden = true;
   els.hintAnswer.classList.remove("flash");
-  void els.hintAnswer.offsetWidth;
-  els.hintAnswer.classList.add("flash");
+  els.hintAnswer.textContent = "";
   els.hintToggle.classList.add("hint-active");
   els.hintToggle.setAttribute("aria-expanded", "true");
 
-  const correctOption = els.options.querySelector(`.option[data-vowel="${state.task.correct}"]`);
+  const correctOption = getOptionByVowel(state.task.correct);
   if (correctOption) correctOption.classList.add("hint-hot");
 
   state.hintTimer = setTimeout(hideHint, 1350);
@@ -102,7 +118,8 @@ function renderTask(task) {
   state.task = task;
   state.locked = false;
 
-  resetHint(task.target);
+  resetHint();
+  clearAnswerFeedback();
   els.sourceLetter.textContent = task.consonant;
   resetSourcePosition();
 
@@ -142,12 +159,12 @@ async function choose(vowel) {
   const target = state.task.target;
   const isCorrect = vowel === state.task.correct;
 
-  els.resultSyllable.innerHTML = coloredSyllable(state.task.consonant, vowel);
-  els.resultCard.classList.add("show");
-
   if (isCorrect) {
+    els.resultSyllable.innerHTML = coloredSyllable(state.task.consonant, vowel);
     els.resultText.className = "result-text good";
     els.resultText.textContent = syllable;
+    els.resultCard.classList.add("show");
+
     state.score += 1;
     state.step += 1;
     els.score.textContent = state.score;
@@ -164,22 +181,20 @@ async function choose(vowel) {
       renderTask(generateTask());
     }
   } else {
-    els.resultText.className = "result-text bad";
-    els.resultText.textContent = `Нужно ${target}`;
-    els.screen.classList.add("shake");
-
-    // Ждём полную цепочку: [ошибочный слог] → [need] → [цель].
-    // Никаких фиксированных 1500 мс.
-    await playErrorAudio(syllable, target);
-    await wait(250);
-
-    els.screen.classList.remove("shake");
     els.resultCard.classList.remove("show");
     resetSourcePosition();
-    state.locked = false;
 
-    // Повтор задания начинается только после полного окончания ошибки.
-    await playTaskAudio(target);
+    const wrongOption = getOptionByVowel(vowel);
+    const correctOption = getOptionByVowel(state.task.correct);
+    restartOptionAnimation(wrongOption, "wrong-bounce");
+    restartOptionAnimation(correctOption, "correct-flash");
+
+    // Ошибка теперь объясняется без текста: отскок → подсветка → правильный слог.
+    await playCorrectionAudio(target);
+    await wait(300);
+
+    clearAnswerFeedback();
+    state.locked = false;
   }
 }
 

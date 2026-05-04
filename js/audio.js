@@ -252,8 +252,12 @@ function playFinalSuccessAudio() {
   return playSequence(["success"], 0);
 }
 
+function playCorrectionAudio(target) {
+  return playSequence([target], 0);
+}
+
 function playErrorAudio(actual, target) {
-  // "МИ. Нужно МА."
-  return playSequence([actual, "need", target], 170);
+  // Оставлено для совместимости старых вызовов: теперь ошибка озвучивает только правильный слог.
+  return playCorrectionAudio(target);
 }
 
