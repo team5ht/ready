@@ -216,19 +216,54 @@ function burst() {
   setTimeout(() => els.starBurst.classList.remove("show"), 750);
 }
 
+function triggerFinishCelebration() {
+  els.miniPause.classList.remove("celebrate");
+  void els.miniPause.offsetWidth;
+  els.miniPause.classList.add("celebrate");
+}
+
 function showPause() {
   renderDots();
   els.pauseScore.textContent = state.score;
   els.miniPause.hidden = false;
+  triggerFinishCelebration();
+}
+
+function clearFinishScreen() {
+  els.miniPause.classList.remove("celebrate");
 }
 
 function newSession(resetScore = false) {
   stopAudioSequence();
+  clearFinishScreen();
 
   if (resetScore) state.score = 0;
   state.step = 0;
   els.score.textContent = state.score;
   els.miniPause.hidden = true;
   renderTask(generateTask());
+}
+
+function goHome() {
+  stopAudioSequence();
+  clearFinishScreen();
+  resetHint();
+  clearAnswerFeedback();
+  clearHotOptions();
+  resetSourcePosition();
+
+  state.score = 0;
+  state.step = 0;
+  state.task = null;
+  state.locked = false;
+  state.drag = null;
+
+  els.score.textContent = state.score;
+  els.pauseScore.textContent = state.score;
+  els.resultCard.classList.remove("show");
+  els.starBurst.classList.remove("show");
+  els.miniPause.hidden = true;
+  els.startScreen.hidden = false;
+  renderDots();
 }
 

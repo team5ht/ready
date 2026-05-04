@@ -49,11 +49,8 @@ const audioEngine = {
 };
 
 const START_BUTTON_ICON = "▶";
-
 const START_BUTTON_LABEL = "Начать";
-
 const START_LOADING_ICON = "⏳";
-
 const START_LOADING_LABEL = "Загрузка";
 
 const SILENCE_SECONDS = 0.03;
@@ -96,5 +93,6 @@ const els = {
   pauseScore: document.getElementById("pauseScore"),
   continueBtn: document.getElementById("continueBtn"),
   againBtn: document.getElementById("againBtn"),
+  homeBtn: document.getElementById("homeBtn"),
 };
 

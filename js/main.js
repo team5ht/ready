@@ -44,5 +44,6 @@ els.startBtn.addEventListener("click", async () => {
 
 els.continueBtn.addEventListener("click", () => newSession(false));
 els.againBtn.addEventListener("click", () => newSession(true));
+els.homeBtn.addEventListener("click", goHome);
 
 renderDots();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Учим слоги — audio MVP v7</title>
+  <title>Учим слоги — audio MVP v8</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
@@ -51,13 +51,27 @@
       </div>
 
       <div class="mini-pause" id="miniPause" hidden>
-        <div>
-          <h2 class="pause-title">Молодец!</h2>
-          <div class="cat">🐱</div>
-          <div class="pause-score"><span>⭐</span><span id="pauseScore">0</span></div>
-          <div class="secondary-row">
-            <button class="secondary icon-only" id="againBtn" type="button" aria-label="Ещё раз"><span aria-hidden="true">↻</span><span class="sr-only">Ещё раз</span></button>
-            <button class="primary icon-only" id="continueBtn" type="button" aria-label="Дальше"><span aria-hidden="true">➜</span><span class="sr-only">Дальше</span></button>
+        <div class="finish-panel">
+          <h2 class="pause-title sr-only">Молодец!</h2>
+
+          <div class="finish-confetti" id="finishConfetti" aria-hidden="true">
+            <span>⭐</span><span>✨</span><span>⭐</span><span>✨</span><span>⭐</span><span>✨</span>
+          </div>
+
+          <div class="finish-visual" aria-hidden="true">
+            <div class="finish-rays"></div>
+            <div class="finish-badge">🏆</div>
+            <div class="finish-stars">
+              <span>⭐</span><span>⭐</span><span>⭐</span>
+            </div>
+          </div>
+
+          <div class="cat finish-cat" aria-hidden="true">🐱</div>
+          <div class="pause-score" aria-label="Звёзды"><span>⭐</span><span id="pauseScore">0</span></div>
+          <div class="secondary-row finish-actions" aria-label="Что дальше">
+            <button class="secondary icon-only finish-action" id="againBtn" type="button" aria-label="Повторить круг"><span aria-hidden="true">↻</span><span class="sr-only">Повторить круг</span></button>
+            <button class="primary icon-only finish-action" id="continueBtn" type="button" aria-label="Следующий круг"><span aria-hidden="true">➜</span><span class="sr-only">Следующий круг</span></button>
+            <button class="secondary icon-only finish-action" id="homeBtn" type="button" aria-label="Домой"><span aria-hidden="true">🏠</span><span class="sr-only">Домой</span></button>
           </div>
         </div>
       </div>
